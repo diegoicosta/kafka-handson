@@ -13,23 +13,8 @@
         <module>order</module>
         <module>order-producer</module>
         <module>payment</module>
+        <module>commons-domain</module>
     </modules>
-
-
-    <repositories>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/libs-snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>confluent</id>
-            <url>http://packages.confluent.io/maven/</url>
-        </repository>
-    </repositories>
-
+    
 
 </project>

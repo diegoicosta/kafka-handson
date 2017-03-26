@@ -1,5 +1,6 @@
 package handson.producer.order;
 
+import handson.commons.domain.Order;
 import moip.kafkautils.serde.GsonSerializer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -15,7 +16,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
  */
 public class Producer {
 
-    private static final String TOPIC = "handson.order";
+    private static final String TOPIC = "handson.orders";
 
     private KafkaProducer<String, Order> buildOrdeProducer() {
         Properties props = new Properties();
@@ -32,14 +33,13 @@ public class Producer {
 
     public void produce(int wait, int max) throws InterruptedException {
 
+        String[] accounts = { "MPA-0001", "MPA-0002", "MPA-0003", "MPA-0004", "MPA-0005" };
+
         KafkaProducer<String, Order> producer = buildOrdeProducer();
 
         for (int i = 0; i < max; i++) {
-
-            Order order = new Order();
-            order.setId("ORD-01" + i);
-            Thread.sleep(wait * 1000L);
-
+            Order order = Order.buildRandom(accounts);
+            Thread.sleep(wait);
             ProducerRecord record = new ProducerRecord(TOPIC, order.getId(), order);
             producer.send(record);
         }

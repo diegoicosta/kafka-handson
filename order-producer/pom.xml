@@ -9,14 +9,12 @@
     <packaging>jar</packaging>
     <name>order-producer</name>
 
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.2.RELEASE</version>
         <relativePath/>
     </parent>
-
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,7 +24,29 @@
         <kafka.version>0.10.1.0-cp2</kafka.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/libs-snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>confluent</id>
+            <url>http://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+
+        <dependency>
+            <groupId>handson</groupId>
+            <artifactId>commons-domain</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
         <dependency>
             <groupId>moip</groupId>
             <artifactId>kafka-utils</artifactId>
@@ -53,6 +73,7 @@
             </exclusions>
         </dependency>
 
+
         <!-- SPRING BOOT -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -65,15 +86,8 @@
             <scope>test</scope>
         </dependency>
 
-
     </dependencies>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-snapshots</id>
-            <url>http://repo.spring.io/snapshot</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <build>
 
@@ -86,7 +100,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        
+
     </build>
 
 </project>
