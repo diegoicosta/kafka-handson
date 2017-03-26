@@ -1,6 +1,7 @@
 package handson.producer.order;
 
 import handson.commons.domain.Order;
+import handson.commons.domain.Topology;
 import moip.kafkautils.serde.GsonSerializer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -15,8 +16,6 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
  * Created by diegoicosta on 25/03/17.
  */
 public class Producer {
-
-    private static final String TOPIC = "handson.orders";
 
     private KafkaProducer<String, Order> buildOrdeProducer() {
         Properties props = new Properties();
@@ -40,7 +39,7 @@ public class Producer {
         for (int i = 0; i < max; i++) {
             Order order = Order.buildRandom(accounts);
             Thread.sleep(wait);
-            ProducerRecord record = new ProducerRecord(TOPIC, order.getId(), order);
+            ProducerRecord record = new ProducerRecord(Topology.HANDSON_ORDER.getName(), order.getId(), order);
             producer.send(record);
         }
         producer.close();

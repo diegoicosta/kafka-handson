@@ -28,11 +28,28 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>handson</groupId>
+            <artifactId>commons-domain</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>moip</groupId>
+            <artifactId>kafka-utils</artifactId>
+            <version>1.8</version>
+        </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
         </dependency>
 
 
