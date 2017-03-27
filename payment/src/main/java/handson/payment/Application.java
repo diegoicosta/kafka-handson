@@ -11,7 +11,7 @@ import static org.springframework.boot.SpringApplication.run;
  * Created by diegoicosta on 20/03/16.
  */
 @SpringBootConfiguration
-@ComponentScan({ "handson.*", "moip.kafkautils.*" })
+@ComponentScan
 public class Application {
 
     private static Logger LOG = LoggerFactory.getLogger(Application.class);

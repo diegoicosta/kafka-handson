@@ -27,6 +27,17 @@ public class Order {
         return order;
     }
 
+    public static Order orderAfterPay(final Order order, final Payment payment) {
+        Order orderUpdate = new Order();
+        orderUpdate.setId(order.getId());
+        orderUpdate.setAmount(order.getAmount());
+        orderUpdate.setAccountId(order.getAccountId());
+        orderUpdate.setCreatedAt(order.getCreatedAt());
+        orderUpdate.setStatus(payment.isAuthorized() ? Status.PAID : Status.CANCELLED);
+
+        return orderUpdate;
+    }
+
     public String getId() {
         return id;
     }
@@ -71,5 +82,11 @@ public class Order {
         CREATED,
         PAID,
         CANCELLED
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "id='" + id + '\'' + ", accountId='" + accountId + '\'' + ", amount=" + amount
+                + ", createdAt=" + createdAt + ", status=" + status + '}';
     }
 }
