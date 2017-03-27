@@ -57,6 +57,7 @@ public class PaymentStreamConsumer {
         streamsConfiguration.put(BOOTSTRAP_SERVERS_CONFIG, KAFKA_URL);
         streamsConfiguration.put(ZOOKEEPER_CONNECT_CONFIG, ZOOKEEPER_URL);
         streamsConfiguration.put("schema.registry.url", "http://localhost:8081");
+        streamsConfiguration.put(NUM_STREAM_THREADS_CONFIG, 1);
 
         return streamsConfiguration;
     }
