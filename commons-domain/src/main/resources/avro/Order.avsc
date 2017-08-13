@@ -1,0 +1,35 @@
+{
+  "namespace": "handson.commons.domain.avro",
+  "type": "record",
+  "name": "Order",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "accountId",
+      "type": "string"
+    },
+    {
+      "name": "amount",
+      "type": "long"
+    },
+    {
+      "name": "status",
+      "type": {
+        "type": "enum",
+        "name": "OrderStatus",
+        "symbols": [
+          "CREATED",
+          "PAID",
+          "CANCELLED"
+        ]
+      }
+    },
+    {
+      "name": "createdAt",
+      "type": "long"
+    }
+  ]
+}

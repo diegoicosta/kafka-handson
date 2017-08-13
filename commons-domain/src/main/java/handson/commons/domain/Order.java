@@ -16,17 +16,6 @@ public class Order {
 
     private static Random random = new Random();
 
-    public static Order buildRandom(String[] accounts) {
-        Order order = new Order();
-        String mpa = accounts[random.nextInt(5)];
-        order.accountId = mpa;
-        order.amount = random.nextInt(10000);
-        order.createdAt = ZonedDateTime.now();
-        order.status = Status.CREATED;
-        order.id = IdBuilder.generate("ORD");
-        return order;
-    }
-
     public static Order orderAfterPay(final Order order, final Payment payment) {
         Order orderUpdate = new Order();
         orderUpdate.setId(order.getId());
