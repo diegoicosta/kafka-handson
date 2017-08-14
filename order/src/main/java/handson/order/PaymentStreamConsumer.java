@@ -1,7 +1,7 @@
 package handson.order;
 
-import handson.commons.domain.Payment;
 import handson.commons.domain.Topology;
+import handson.commons.domain.avro.Payment;
 import moip.kafkautils.serde.GenericJsonSerde;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;

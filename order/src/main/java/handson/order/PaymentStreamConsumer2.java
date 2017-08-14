@@ -1,8 +1,10 @@
 package handson.order;
 
-import handson.commons.domain.Order;
-import handson.commons.domain.Payment;
+import handson.commons.domain.Builder;
 import handson.commons.domain.Topology;
+import handson.commons.domain.avro.Order;
+import handson.commons.domain.avro.OrderStatus;
+import handson.commons.domain.avro.Payment;
 import moip.kafkautils.serde.GenericJsonSerde;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
@@ -14,7 +16,6 @@ import org.apache.kafka.streams.kstream.KStreamBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
@@ -23,7 +24,7 @@ import static org.apache.kafka.streams.StreamsConfig.*;
 /**
  * Created by diegoicosta on 26/03/17.
  */
-@Component
+//@Component
 public class PaymentStreamConsumer2 {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -44,10 +45,10 @@ public class PaymentStreamConsumer2 {
         /* @formatter:off */
         builder
                 .stream(keySerde, paymentSerde, Topology.HANDSON_PAYMENT.getName())
-                .map((s, payment) -> new KeyValue<>(payment.getSourceId(),payment))
+                .map((s, payment) -> new KeyValue<>(payment.getProductId().toString(),payment))
                 .join(
-                        orderStream.filter((s, order) -> order.getStatus().equals(Order.Status.CREATED)),
-                        (payment, order) -> Order.orderAfterPay(order,payment),
+                        orderStream.filter((s, order) -> order.getStatus().equals(OrderStatus.CREATED)),
+                        (payment, order) -> Builder.orderAfterPay(order,payment),
                         JoinWindows.of(3000),
                         keySerde,paymentSerde, orderSerde
                 )

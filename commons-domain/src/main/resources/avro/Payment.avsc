@@ -1,0 +1,51 @@
+{
+  "namespace": "handson.commons.domain.avro",
+  "type": "record",
+  "name": "Payment",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "productId",
+      "type": "string"
+    },
+    {
+      "name": "transaction",
+      "type": "string"
+    },
+    {
+      "name": "productType",
+      "type": {
+        "type": "enum",
+        "name": "ProductType",
+        "symbols": [
+          "SUBSCRIPTION",
+          "INVOICE",
+          "ECOMMERCE"
+        ]
+      }
+    },
+    {
+      "name": "amount",
+      "type": "long"
+    },
+    {
+      "name": "status",
+      "type": {
+        "type": "enum",
+        "name": "PaymentStatus",
+        "symbols": [
+          "AUTHORIZED",
+          "IN_ANALYSIS",
+          "DENIED"
+        ]
+      }
+    },
+    {
+      "name": "createdAt",
+      "type": "long"
+    }
+  ]
+}

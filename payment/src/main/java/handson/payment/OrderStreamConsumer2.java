@@ -1,8 +1,10 @@
 package handson.payment;
 
-import handson.commons.domain.Order;
-import handson.commons.domain.Payment;
+import handson.commons.domain.Builder;
 import handson.commons.domain.Topology;
+import handson.commons.domain.avro.Order;
+import handson.commons.domain.avro.OrderStatus;
+import handson.commons.domain.avro.Payment;
 import moip.kafkautils.serde.GenericJsonSerde;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
@@ -14,16 +16,16 @@ import org.apache.kafka.streams.processor.ProcessorContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
-import static org.apache.kafka.streams.StreamsConfig.*;
+import static org.apache.kafka.streams.StreamsConfig.APPLICATION_ID_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
 
 /**
  * Created by diegoicosta on 26/03/17.
  */
-@Component
+//@Component
 public class OrderStreamConsumer2 {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -42,7 +44,7 @@ public class OrderStreamConsumer2 {
         /* @formatter:off */
         builder
                 .stream(keySerde, orderSerde, Topology.HANDSON_ORDER.getName())
-                .filter((s, order) -> order.getStatus().equals(Order.Status.CREATED))
+                .filter((s, order) -> order.getStatus().equals(OrderStatus.CREATED))
                 .transform(() -> new OrderTransformer() )
                 .to(keySerde,paymentSerde,Topology.HANDSON_PAYMENT.getName());
         /* @formatter:on */
@@ -62,7 +64,6 @@ public class OrderStreamConsumer2 {
         Properties streamsConfiguration = new Properties();
         streamsConfiguration.put(APPLICATION_ID_CONFIG, APP_ID);
         streamsConfiguration.put(BOOTSTRAP_SERVERS_CONFIG, KAFKA_URL);
-        streamsConfiguration.put(ZOOKEEPER_CONNECT_CONFIG, ZOOKEEPER_URL);
         streamsConfiguration.put("schema.registry.url", "http://localhost:8081");
 
         return streamsConfiguration;
@@ -76,7 +77,7 @@ public class OrderStreamConsumer2 {
 
         @Override
         public KeyValue<String, Payment> transform(String key, Order order) {
-            Payment payment = Payment.buildRandom(order);
+            Payment payment = Builder.buildRandom(order);
             return new KeyValue(payment.getId(), payment);
         }
 
